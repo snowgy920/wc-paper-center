@@ -170,6 +170,9 @@ function porto_product_summary_hook(){
 	} else {
 		add_action( 'woocommerce_single_product_summary', 'porto_show_property_logo', 28 );
 	}
+
+	// show product tags
+	add_action( 'porto_after_content_bottom', 'porto_product_tags', 8);
 }
 // remove availability text for stock label
 function porto_custom_woocommerce_add_stock_html() {
@@ -200,7 +203,6 @@ add_filter( 'woocommerce_show_variation_price', 'porto_always_show_variation_pri
 
 
 // show product tags
-add_action( 'porto_after_content_bottom', 'porto_product_tags', 8);
 function porto_product_tags() {
 	$terms = wp_get_post_terms( get_the_id(), 'product_tag' );
 	if( count($terms) > 0 ){
