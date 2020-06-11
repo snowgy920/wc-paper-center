@@ -172,7 +172,7 @@ function porto_product_summary_hook(){
 	}
 
 	// show product tags
-	add_action( 'porto_after_content_bottom', 'porto_product_tags', 8);
+	add_action( 'porto_after_content_bottom', 'porto_product_tags', 5);
 }
 // remove availability text for stock label
 function porto_custom_woocommerce_add_stock_html() {
