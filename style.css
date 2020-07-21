@@ -161,12 +161,30 @@ img.property-logo:not(:last-child) {
 .property-logos label {
     margin: 0 5px 0 0;
 }
-.property-logos img {
+.property-logos img.property-logo {
     width: 32px !important;
     display: inline-block !important;
 }
+.property-logos span.text-logo {
+    border: 1px solid #e9e9e9;
+    cursor: pointer;
+    display: inline-block;
+    padding: 2px 5px 4px;
+}
+.property-logos span.text-logo:not(:last-child) {
+    margin-right: 4px;
+}
+.property-logos span.text-logo:hover {
+    border-color: var(--primary);
+    border-width: 1px;
+}
+
+
 .product-summary-wrap .property-logos {
     margin-top: 5px;
+}
+.archive-products .product-inner .property-logos {
+    margin-bottom: 5px;
 }
 .products-slider .property-logos label, ul.products li.product-col .property-logos label {
     display: none;

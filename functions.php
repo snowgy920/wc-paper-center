@@ -113,19 +113,35 @@ function porto_variation_ean($vars, $product, $variation) {
 require_once('register_taxonomy.php');
 function porto_show_property_logo() {
 	global $product;
-	$terms = get_the_terms($product->get_id(), 'property_logo');
-	if (empty($terms)) return;
-?>
+
+
+    $attributes = $product->get_attributes();
+    if ( ! $attributes ) {
+        return;
+	}
+	foreach ($attributes as $attribute) {
+		$attr  = wc_get_attribute( $attribute->get_id() );
+		if ($attr->type == 'icon_logo') {
+			$terms = get_the_terms($product->get_id(), $attr->slug);
+			?>
 	<div class="property-logos">
-		<label><?php echo __('Attributes:', 'porto')?></label>
-	<?php
+		<label><?php echo $attr->name.':'?></label>
+		<?php
 	foreach ($terms as $t) {
-		$image_id = get_term_meta($t->term_id, 'property-logo-image-id', true);
-		echo wp_get_attachment_image($image_id, array('32', '32'), '', array('class'=>'property-logo', 'title'=>$t->name));
+		$image_id = get_term_meta($t->term_id, 'logo_image', true);
+		if (!empty($image_id)) {
+			echo wp_get_attachment_image($image_id, array('32', '32'), '', array('class'=>'property-logo', 'title'=>$t->name));
+		} else {
+			?>
+		<span class="text-logo"><?php echo $t->name; ?></span>
+			<?php
+		}
 	}
 ?>
 	</div>
 <?php
+		}
+	}
 }
 // display logos on shop page
 add_action( 'woocommerce_after_shop_loop_item', 'porto_show_property_logo', 20 );
