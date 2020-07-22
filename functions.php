@@ -115,12 +115,17 @@ function porto_show_property_logo() {
 	global $product;
 
 
-    $attributes = $product->get_attributes();
+	$attributes = get_post_meta($product->get_id(), '_product_attributes', true);
     if ( ! $attributes ) {
         return;
 	}
 	foreach ($attributes as $attribute) {
-		$attr  = wc_get_attribute( $attribute->get_id() );
+		if (empty($attribute['is_visible']))
+			continue;
+
+		$id = wc_attribute_taxonomy_id_by_name($attribute['name']);
+		$attr  = wc_get_attribute( $id );
+
 		if ($attr->type == 'icon_logo') {
 			$terms = get_the_terms($product->get_id(), $attr->slug);
 			?>
